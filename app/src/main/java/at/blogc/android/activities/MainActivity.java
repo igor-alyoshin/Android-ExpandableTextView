@@ -95,6 +95,12 @@ public class MainActivity extends AppCompatActivity
             {
                 Log.d(TAG, "ExpandableTextView collapsed");
             }
+
+            @Override
+            public void onExpanded(@NonNull final ExpandableTextView view)
+            {
+                Log.d(TAG, "ExpandableTextView expanded");
+            }
         });
     }
 }
