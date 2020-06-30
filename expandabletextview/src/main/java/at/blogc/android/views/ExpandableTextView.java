@@ -169,6 +169,7 @@ public class ExpandableTextView extends TextView
                     // keep track of current status
                     ExpandableTextView.this.expanded = true;
                     ExpandableTextView.this.animating = false;
+                    notifyOnExpanded();
                 }
             });
 
@@ -359,6 +360,14 @@ public class ExpandableTextView extends TextView
         }
     }
 
+    private void notifyOnExpanded()
+    {
+        for (final OnExpandListener onExpandListener : this.onExpandListeners)
+        {
+            onExpandListener.onExpanded(this);
+        }
+    }
+
     //region public interfaces
 
     /**
@@ -368,10 +377,16 @@ public class ExpandableTextView extends TextView
     public interface OnExpandListener
     {
         /**
-         * The {@link ExpandableTextView} is being expanded.
+         * The {@link ExpandableTextView} is being expanding.
          * @param view the textview
          */
         void onExpand(@NonNull ExpandableTextView view);
+
+        /**
+         * The {@link ExpandableTextView} is being expanded.
+         * @param view the textview
+         */
+        void onExpanded(@NonNull ExpandableTextView view);
 
         /**
          * The {@link ExpandableTextView} is being collapsed.
@@ -398,6 +413,12 @@ public class ExpandableTextView extends TextView
         {
             // empty implementation
         }
+        @Override
+        public void onExpanded(@NonNull final ExpandableTextView view)
+        {
+            // empty implementation
+        }
+
     }
 
     //endregion
