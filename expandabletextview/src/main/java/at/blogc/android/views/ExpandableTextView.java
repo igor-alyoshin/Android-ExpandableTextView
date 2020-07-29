@@ -233,6 +233,7 @@ public class ExpandableTextView extends TextView
                     final ViewGroup.LayoutParams layoutParams = ExpandableTextView.this.getLayoutParams();
                     layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
                     ExpandableTextView.this.setLayoutParams(layoutParams);
+                    notifyOnCollapsed();
                 }
             });
 
@@ -368,6 +369,14 @@ public class ExpandableTextView extends TextView
         }
     }
 
+    private void notifyOnCollapsed()
+    {
+        for (final OnExpandListener onExpandListener : this.onExpandListeners)
+        {
+            onExpandListener.onCollapsed(this);
+        }
+    }
+
     //region public interfaces
 
     /**
@@ -393,6 +402,12 @@ public class ExpandableTextView extends TextView
          * @param view the textview
          */
         void onCollapse(@NonNull ExpandableTextView view);
+
+        /**
+         * The {@link ExpandableTextView} is being collapsed.
+         * @param view the textview
+         */
+        void onCollapsed(@NonNull ExpandableTextView view);
     }
 
     /**
@@ -418,7 +433,11 @@ public class ExpandableTextView extends TextView
         {
             // empty implementation
         }
-
+        @Override
+        public void onCollapsed(@NonNull final ExpandableTextView view)
+        {
+            // empty implementation
+        }
     }
 
     //endregion
